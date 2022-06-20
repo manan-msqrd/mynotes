@@ -3,6 +3,7 @@ import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/enums/menu_action.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/services/crud/notes_service.dart';
+import 'package:my_notes/views/notes/new_notes_view.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -31,7 +32,14 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text("My Notes"),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(newNoteRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton(onSelected: (value) async {
             switch (value) {
               case MenuAction.logout:
@@ -53,7 +61,6 @@ class _NotesViewState extends State<NotesView> {
             ];
           })
         ],
-        title: const Text("Main UI"),
       ),
       body: FutureBuilder(
         future: _notesService.getOrCreateUser(email: userEmail),
